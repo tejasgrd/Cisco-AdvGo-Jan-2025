@@ -60,8 +60,13 @@ func main() {
 	   logAdd := wrapLogger(add)
 	   	profileLogAdd := wrapProfiler(logAdd)
 	*/
-	profileLogAdd := wrapProfiler(wrapLogger(add))
-	profileLogAdd(100, 200)
+	/*
+		profileLogAdd := wrapProfiler(wrapLogger(add))
+		profileLogAdd(100, 200)
+	*/
+
+	add := wrapProfiler(wrapLogger(add))
+	add(100, 200)
 }
 
 // ver 4.0 (adding profiling)
