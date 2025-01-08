@@ -59,6 +59,7 @@
         - typically, includes the complete repo path
     - go runtime version
     - dependencies
+- Reference (https://go.dev/ref/mod)
 #### Create a module
 ```shell
 go mod init <module_name>
@@ -104,3 +105,4 @@ go mod download
 ```shell
 go mod vendor
 ```
+
