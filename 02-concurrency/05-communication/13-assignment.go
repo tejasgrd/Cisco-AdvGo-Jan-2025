@@ -3,22 +3,37 @@ Modify so that the logic for checking if a number is prime or not is executed co
 */
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 func main() {
-	primes := genPrimes(2, 100)
+	primes := genPrimes(2, 1000)
 	for _, no := range primes {
 		fmt.Println("Prime No :", no)
 	}
 }
 
 func genPrimes(start, end int) []int {
+	// communicate by sharing memory
 	var result []int
+	var wg sync.WaitGroup
+	var mutex sync.Mutex
 	for no := start; no <= end; no++ {
-		if isPrime(no) {
-			result = append(result, no)
-		}
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if isPrime(no) {
+				mutex.Lock()
+				{
+					result = append(result, no)
+				}
+				mutex.Unlock()
+			}
+		}()
 	}
+	wg.Wait()
 	return result
 }
 

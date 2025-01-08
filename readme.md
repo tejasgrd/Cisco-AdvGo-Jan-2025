@@ -120,14 +120,55 @@ go mod vendor
 - goroutines are lightweight (4 KB)
 ![image](./images/Go-Concurrency.png)
 
-#### WaitGroups
+### WaitGroups
 - sync.WaitGroup
 - semaphore based counter
 - has the ability to block the execution of a function until the counter becomes 0
 
-#### Data Race detection
+### Data Race detection
 ```shell
 go run -race <program.go>
 # OR
 go build -race <program.go>
 ```
+
+### Channels
+- data type designed to enable communication between goroutines
+#### Declaration
+```go
+var <var_name> chan <data_type>
+// ex:
+var ch chan int
+```
+#### Initialization
+```go
+<var_name> = make(chan <data_type>)
+// ex:
+ch = make(chan int)
+```
+#### Declaration & Initialization
+```go
+var ch chan int = make(chan int)
+// OR
+var ch = make(chan int) // type inference
+// OR
+ch := make(chan int)
+```
+#### Channel Operation
+- Using the channel operator ( <- )
+##### Send Operation
+```go
+<ch_var_name> <- <data>
+// ex:
+ch <- 100
+```
+##### Receive Operation
+```go
+<- <ch_var_name>
+// ex:
+data := <-ch
+```
+##### Channel Behavior
+![image](./images/Channel-Behavior.png)
+
+
