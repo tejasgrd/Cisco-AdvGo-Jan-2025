@@ -5,6 +5,7 @@ import (
 	"sync"
 )
 
+// Communicate by sharing memory (Not advisable)
 var result int
 
 func main() {
