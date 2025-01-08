@@ -106,3 +106,16 @@ go mod download
 go mod vendor
 ```
 
+## Concurrency
+### What is Concurrency?
+- Design with more than one execution path
+- Typically achieved using OS Threads
+    - OS Thread ~ 2MB
+
+![image](./images/Conventional-Concurrency.png)
+
+### Go Concurrency
+- Built in scheduler
+- Concurrent operations are represented as "go routines"
+- goroutines are lightweight (4 KB)
+![image](./images/Go-Concurrency.png)
