@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func f1() {
-	fmt.Println("f1 invoked")
+	fmt.Println("f1 started")
+	time.Sleep(3 * time.Second)
+	fmt.Println("f1 completed")
 }
 
 func f2() {
@@ -18,7 +21,7 @@ func main() {
 
 	// Poor man's synchronization techniques (DO NOT USE THEM)
 
-	// time.Sleep(1 * time.Second) // block the main() so that the scheduler can look for other goroutines scheduled and execute them (cooperative multitasking)
+	time.Sleep(1 * time.Second) // block the main() so that the scheduler can look for other goroutines scheduled and execute them (cooperative multitasking)
 
 	// fmt.Scanln()
 }

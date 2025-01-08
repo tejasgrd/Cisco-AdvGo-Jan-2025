@@ -119,3 +119,8 @@ go mod vendor
 - Concurrent operations are represented as "go routines"
 - goroutines are lightweight (4 KB)
 ![image](./images/Go-Concurrency.png)
+
+#### WaitGroups
+- sync.WaitGroup
+- semaphore based counter
+- has the ability to block the execution of a function until the counter becomes 0
