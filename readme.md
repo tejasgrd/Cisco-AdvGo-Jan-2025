@@ -48,3 +48,59 @@
 - Testing
 - Micro benchmarking
 - Profiling
+
+## Modules & Packages
+### Module
+- Any code that need to versioned and deployed together
+- Typically, a folder with go.mod file
+- go.mod
+    - manifest file for the module
+    - name
+        - typically, includes the complete repo path
+    - go runtime version
+    - dependencies
+#### Create a module
+```shell
+go mod init <module_name>
+# ex:
+go mod init github.com/tkmagesh/cisco-gofoundation-dec-2024/11-modularity-demo
+```
+
+#### Execute a module
+```shell
+go run .
+```
+
+#### Create a build
+```shell
+go build .
+# OR
+go build -o <binary_name> .
+```
+
+### Package
+- Internal organization of code in a module
+- Just folders
+- Can be nested
+- Scope can be defined at the package level
+
+### Using OSS 
+#### Add an OSS package
+- By default, OSS packages are downloaded in the GOPATH/pkg folder
+```shell
+go get <name>
+# ex:
+go get github.com/fatih/color
+```
+#### Update the go.mod file references
+```shell
+go mod tidy
+```
+#### Only download the dependencies
+```shell
+go mod download
+```
+#### To localize the dependencies
+```shell
+go mod vendor
+```
