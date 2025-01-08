@@ -114,7 +114,7 @@ go mod vendor
 
 ![image](./images/Conventional-Concurrency.png)
 
-### Go Concurrency
+### Go Concurrency (Managed Concurrency)
 - Built in scheduler
 - Concurrent operations are represented as "go routines"
 - goroutines are lightweight (4 KB)
