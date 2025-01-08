@@ -124,3 +124,10 @@ go mod vendor
 - sync.WaitGroup
 - semaphore based counter
 - has the ability to block the execution of a function until the counter becomes 0
+
+#### Data Race detection
+```shell
+go run -race <program.go>
+# OR
+go build -race <program.go>
+```
