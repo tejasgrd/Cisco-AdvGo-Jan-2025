@@ -194,5 +194,12 @@ data := <-ch
         - Used for sharing data across context hierarchies
         - Non cancellable
 
+## Database Programming
+- Standard Library package (database/sql)
+- High level extensions for the stdlib (sqlx)
+- Code generators (sqlc)
+    - https://docs.sqlc.dev/en/latest/index.html
+- ORM (GORM)
+- Query Builders
 
 
