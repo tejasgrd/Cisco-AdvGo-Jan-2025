@@ -10,15 +10,26 @@ import (
 )
 
 func main() {
-	ch := genNos()
+	stopCh := stop()
+	ch := genNos(stopCh)
 	for no := range ch {
 		fmt.Println(no)
 	}
 }
 
-func genNos() <-chan int {
+func stop() <-chan struct{} {
+	stopCh := make(chan struct{})
+	go func() {
+		fmt.Println("Hit ENTER to stop...")
+		fmt.Scanln()
+		// stopCh <- struct{}{}
+		close(stopCh)
+	}()
+	return stopCh
+}
+
+func genNos(stopCh <-chan struct{}) <-chan int {
 	ch := make(chan int)
-	stopCh := time.After(5 * time.Second)
 	go func() {
 		var no int
 	LOOP:
