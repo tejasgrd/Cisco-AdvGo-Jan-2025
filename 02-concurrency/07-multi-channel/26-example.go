@@ -52,7 +52,6 @@ LOOP:
 		select {
 		case resultCh <- fmt.Sprintf("Even : %d", no):
 			time.Sleep(500 * time.Millisecond)
-			no++
 		case <-stopCh:
 			break LOOP
 		}
@@ -66,7 +65,6 @@ LOOP:
 		select {
 		case resultCh <- fmt.Sprintf("Odd : %d", no):
 			time.Sleep(300 * time.Millisecond)
-			no++
 		case <-stopCh:
 			break LOOP
 		}
