@@ -171,4 +171,28 @@ data := <-ch
 ##### Channel Behavior
 ![image](./images/Channel-Behavior.png)
 
+## Context
+- Cancel propagation
+- Cancellation Strategies
+    - programmatic cancellation
+    - time based cancellation
+        - relative time
+        - absolute time
+- Creating a Context
+    - context.Background()
+        - Usually the root context
+        - Meant to be used as a parent for creating context
+        - Non cancellable
+    - context.WithCancel()
+        - programmatic cancellation
+    - context.WithTimeout()
+        - relative time based cancellation (automatic & programmatic)
+        - wrapper for context.WithDeadline()
+    - context.WithDeadline()
+        - absolute time based cancellation (automatic & programmatic)
+    - context.WithValue()
+        - Used for sharing data across context hierarchies
+        - Non cancellable
+
+
 
