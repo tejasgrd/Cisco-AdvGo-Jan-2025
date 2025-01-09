@@ -8,10 +8,15 @@ import (
 	"sync"
 )
 
+type PrimeResult struct {
+	no      int
+	isPrime bool
+}
+
 func main() {
 	primes := genPrimes(2, 100, 5)
-	for no := range primes {
-		fmt.Println("Prime No :", no)
+	for result := range primes {
+		fmt.Printf("%+v\n", result)
 	}
 }
 
@@ -28,16 +33,18 @@ func dataProducer(start, end int) <-chan int {
 	return dataCh
 }
 
-func worker(wg *sync.WaitGroup, dataCh <-chan int, result chan<- int) {
+func worker(wg *sync.WaitGroup, dataCh <-chan int, result chan<- PrimeResult) {
 	defer wg.Done()
 	for no := range dataCh {
 		if isPrime(no) {
-			result <- no
+			result <- PrimeResult{no: no, isPrime: true}
+			continue
 		}
+		result <- PrimeResult{no: no, isPrime: false}
 	}
 }
 
-func doWork(workerCount int, start, end int, resultCh chan<- int) {
+func doWork(workerCount int, start, end int, resultCh chan<- PrimeResult) {
 	wg := &sync.WaitGroup{}
 	dataCh := dataProducer(start, end)
 	// spin up the workers
@@ -52,9 +59,9 @@ func doWork(workerCount int, start, end int, resultCh chan<- int) {
 	close(resultCh)
 }
 
-func genPrimes(start, end int, workerCount int) <-chan int {
+func genPrimes(start, end int, workerCount int) <-chan PrimeResult {
 	// share memory by communicating
-	resultCh := make(chan int)
+	resultCh := make(chan PrimeResult)
 	// Work Manager
 	go doWork(workerCount, start, end, resultCh)
 	return resultCh

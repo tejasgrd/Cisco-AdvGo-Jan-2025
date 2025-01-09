@@ -29,7 +29,7 @@ func genPrimes(start, end int) <-chan int {
 				}
 			}()
 		}
-		wg.Wait()
+		wg.Wait() //block
 		close(result)
 	}()
 	return result
