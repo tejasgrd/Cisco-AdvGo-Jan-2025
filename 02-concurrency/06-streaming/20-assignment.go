@@ -9,31 +9,29 @@ import (
 )
 
 func main() {
-	primes := genPrimes(2, 1000)
-	for _, no := range primes {
+	primes := genPrimes(2, 100)
+	for no := range primes {
 		fmt.Println("Prime No :", no)
 	}
 }
 
-func genPrimes(start, end int) []int {
-	// communicate by sharing memory
-	var result []int
-	var wg sync.WaitGroup
-	var mutex sync.Mutex
-	for no := start; no <= end; no++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			if isPrime(no) {
-				mutex.Lock()
-				{
-					result = append(result, no)
+func genPrimes(start, end int) <-chan int {
+	// share memory by communicating
+	var result chan int = make(chan int)
+	go func() {
+		var wg sync.WaitGroup
+		for no := start; no <= end; no++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				if isPrime(no) {
+					result <- no
 				}
-				mutex.Unlock()
-			}
-		}()
-	}
-	wg.Wait()
+			}()
+		}
+		wg.Wait()
+		close(result)
+	}()
 	return result
 }
 
