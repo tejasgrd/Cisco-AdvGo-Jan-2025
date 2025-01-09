@@ -1,5 +1,5 @@
 /*
-modify the below to stop when the user hits ENTER key
+Shutdown on receiving kill signal
 DO NOT accept user input in the genNos() function
 */
 package main
