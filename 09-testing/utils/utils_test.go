@@ -44,7 +44,7 @@ func TestIsPrime(t *testing.T) {
 	}{
 		{no: 11, expected: true},
 		{no: 12, expected: false},
-		{no: 13, expected: false},
+		{no: 13, expected: true},
 		{no: 17, expected: true},
 		{no: 19, expected: true},
 	}

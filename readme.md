@@ -253,3 +253,13 @@ data := <-ch
 - Test Runner
     - "go" tool
 
+- Tools
+    - gotest - https://github.com/rakyll/gotest
+    - mockery - https://vektra.github.io/mockery/latest/
+    - testify - https://github.com/stretchr/testify
+
+- To generate mocks
+```shell
+mockery --all
+```
+
