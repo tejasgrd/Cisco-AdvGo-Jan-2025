@@ -247,4 +247,9 @@ data := <-ch
             the binaries (protoc-gen-go, protoc-gen-go-grpc) must be present in $GOPATH/bin folder
     
 
+## Testing
+- Test Framework
+    - "testing" package
+- Test Runner
+    - "go" tool
 
