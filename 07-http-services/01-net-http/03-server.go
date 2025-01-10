@@ -22,17 +22,28 @@ var products []Product = []Product{
 	{103, "Marker", 50},
 }
 
+type Middleware func(http.HandlerFunc) http.HandlerFunc
+
 type AppServer struct {
-	routes map[string]http.HandlerFunc
+	routes      map[string]http.HandlerFunc
+	middlewares []Middleware
 }
 
 func NewAppServer() *AppServer {
 	return &AppServer{
-		routes: make(map[string]http.HandlerFunc),
+		routes:      make(map[string]http.HandlerFunc),
+		middlewares: make([]Middleware, 0),
 	}
 }
 
+func (appServer *AppServer) UseMiddleware(middleware Middleware) {
+	appServer.middlewares = append(appServer.middlewares, middleware)
+}
+
 func (appServer *AppServer) AddRoute(pattern string, handlerFn http.HandlerFunc) {
+	for i := len(appServer.middlewares) - 1; i >= 0; i-- {
+		handlerFn = appServer.middlewares[i](handlerFn)
+	}
 	appServer.routes[pattern] = handlerFn
 }
 
@@ -114,10 +125,13 @@ func traceWrapper(handlerFn http.HandlerFunc) http.HandlerFunc {
 
 func main() {
 	appServer := NewAppServer()
+	appServer.UseMiddleware(traceWrapper)
 	timeoutWrapper := createTimeoutWrapper(3 * time.Second)
-	appServer.AddRoute("/", traceWrapper(timeoutWrapper(logWrapper(IndexHandler))))
-	appServer.AddRoute("/products", logWrapper(ProductsHandler))
-	appServer.AddRoute("/customers", logWrapper(CustomersHandler))
+	appServer.UseMiddleware(timeoutWrapper)
+	appServer.UseMiddleware(logWrapper)
+	appServer.AddRoute("/", IndexHandler)
+	appServer.AddRoute("/products", ProductsHandler)
+	appServer.AddRoute("/customers", CustomersHandler)
 	if err := http.ListenAndServe(":8080", appServer); err != nil {
 		log.Println(err)
 	}
