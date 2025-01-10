@@ -263,3 +263,21 @@ data := <-ch
 mockery --all
 ```
 
+## Profiling
+### Execute micro benchmarks with memory allocations
+go test  -bench=. ./...  -cpu=1,2,4,8 -benchmem
+
+### CPU profiling
+go test  -bench=. ./... -cpuprofile=<profile_file>  -cpu=1,2,4,8 -benchmem
+
+### Memory profiling
+go test  -bench=. ./... -memprofile=<profile_file>  -cpu=1,2,4,8 -benchmem
+
+### Analysing profile data
+go tool pprof <profile_file>
+
+#### pprof commands
+- top10
+- list <function_name>
+- web
+
